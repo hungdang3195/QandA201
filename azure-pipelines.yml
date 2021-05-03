@@ -9,13 +9,25 @@ pool:
   vmImage: ubuntu-latest
 
 variables:
+  solution: '**/QandA.sln'
+  buildPlatform: 'ANY CPU' # x86
   buildConfiguration: 'Release'
+  buildversion: 1.0.0
 
 steps:
-- task: UseDotNet@2
+- task: NuGetToolInstaller@1
+- task: NuGetCommand@2
   inputs:
-   packageType: 'sdk'
-   version: '5.0.100'
-- script: dotnet build --configuration $(buildConfiguration)
-  workingDirectory: Backend
-  displayName: 'backend build'
+    restoreSolution: '$(solution)'
+- task: VSBuild@1
+  inputs:
+    solution: '$(solution)'
+    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+# - task: UseDotNet@2
+#   inputs:
+#    packageType: 'sdk'
+#    version: '5.0.100'
+# - script: dotnet build --configuration $(buildConfiguration)
+#   displayName: 'backend build'
