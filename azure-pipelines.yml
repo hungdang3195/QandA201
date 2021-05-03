@@ -17,6 +17,6 @@ steps:
   inputs:
    packageType: 'sdk'
    version: '5.0.100'
-- script: dotnet build -configuration $(buildConfiguration)
+- script: dotnet build --configuration $(buildConfiguration)
   workingDirectory: Backend
   displayName: 'backend build'
