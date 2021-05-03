@@ -19,15 +19,15 @@ steps:
 - task: NuGetCommand@2
   inputs:
     restoreSolution: '$(solution)'
-- task: VSBuild@1
-  inputs:
-    solution: '$(solution)'
-    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
-# - task: UseDotNet@2
+# - task: VSBuild@1
 #   inputs:
-#    packageType: 'sdk'
-#    version: '5.0.100'
-# - script: dotnet build --configuration $(buildConfiguration)
-#   displayName: 'backend build'
+#     solution: '$(solution)'
+#     msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
+#     platform: '$(buildPlatform)'
+#     configuration: '$(buildConfiguration)'
+- task: UseDotNet@2
+  inputs:
+   packageType: 'sdk'
+   version: '5.0.100'
+- script: dotnet build --configuration $(buildConfiguration)
+  displayName: 'backend build'
