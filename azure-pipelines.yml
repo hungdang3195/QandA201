@@ -4,6 +4,10 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
 trigger:
 - master
-
+stages:
+ - stage: Build
+   jobs:
+   - job: Build
+   
 pool:
   vmImage: ubuntu-latest
