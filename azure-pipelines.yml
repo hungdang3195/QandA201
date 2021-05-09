@@ -9,16 +9,21 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
+  solution: '**/*.sln'
 steps:
   - task: DotNetCoreCLI@2
-    displayName: Restore
+  - task: UseDotNet@2
+    displayName: 'Use dotnet sdk 3.1'
     inputs:
-      command: restore
-      projects: '**/*.csproj'
+      version: 3.1.x
+      includePreviewVersions: false
+  - task: NuGetCommand@2
+    inputs:
+      restoreSolution: '$(solution)'
+
   - task: DotNetCoreCLI@2
-    displayName: Build
     inputs:
-      command: build
-      projects: '**/*.csproj'
-      arguments: '--configuration $(buildConfiguration)' # Update this to match your need
+      command: 'build'
+      projects: '$(solution)'
+      outputDir: '$(Build.ArtifactStagingDirectory)'
 
