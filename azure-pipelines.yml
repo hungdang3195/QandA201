@@ -10,7 +10,10 @@ pool:
 variables:
   buildConfiguration: 'Release'
 steps:
-  - script: donet build --configuration $(buildConfiguration)
-    workingDirectory: backend
-    displayName: 'dotnet build $(buildConfiguration)'
+  - task: DotNetCoreCLI@2
+    displayName: Build
+    inputs:
+      command: build
+      projects: '**/*.csproj'
+      arguments: '--configuration $(buildConfiguration)' # Update this to match your need
 
