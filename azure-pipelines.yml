@@ -11,19 +11,17 @@ variables:
   buildConfiguration: 'Release'
   solution: '**/*.sln'
 steps:
-  - task: DotNetCoreCLI@2
-  - task: UseDotNet@2
-    displayName: 'Use dotnet sdk 3.1'
-    inputs:
-      packageType: 'sdk'
-      version: '5.0.100'
-  - task: DotNetCoreCLI@2
-    inputs:
-      command: 'restore' 
-      projects: 'QandA2021/Backend/QandA.csproj'
-
-  - task: DotNetCoreCLI@2
-    inputs:
-      command: 'build' 
-      projects: 'QandA2021/Backend/QandA.csproj'
-
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: 'QandA2021/Backend/QandA.csproj'
+    arguments: '-c Release'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'publish'
+    publishWebProjects: true
+    arguments: '-o $(Build.ArtifactStagingDirectory)/web'
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
