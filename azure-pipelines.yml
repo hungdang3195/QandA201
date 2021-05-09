@@ -17,13 +17,13 @@ steps:
     inputs:
       packageType: 'sdk'
       version: '5.0.100'
-  - task: NuGetCommand@2
+  - task: DotNetCoreCLI@2
     inputs:
-      restoreSolution: '$(solution)'
+      command: 'restore' 
+      projects: 'QandA2021/Backend/QandA.csproj'
 
   - task: DotNetCoreCLI@2
     inputs:
-      command: 'build'
-      projects: '$(solution)'
-      outputDir: '$(Build.ArtifactStagingDirectory)'
+      command: 'build' 
+      projects: 'QandA2021/Backend/QandA.csproj'
 
